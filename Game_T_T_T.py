@@ -93,8 +93,8 @@ def computer_choice_move(board):
     move = ""
     free_moves = [m for row in board for m in row if str(m).isdigit()]
     if state in experience and len(experience[state]) > 0:
-        # print(state)
-        # print(experience[state][0])
+        print(state)
+        print(experience[state][0])
         for i in range(len(experience[state][0][0])):
             if experience[state][0][0][i] in free_moves:
                 move = experience[state][0][0][i]
@@ -174,7 +174,6 @@ def states_memory(board, num):
 def learning(board):
     win_board = [m for row in board for m in row]
     win_moves = list(state)
-
     num_moves = []
     mark_X = 0
     mark_O = 0
@@ -200,7 +199,7 @@ def learning(board):
     num_moves = [i[1] for i in num_moves]
     for key in experience:
         for l in experience[key]:
-            if l[0] == num_moves and len(l[0]) < 6:
+            if l[0] == num_moves and (mark_O + mark_X) < 9:
                 l[1] += 1
                 break
         experience[key].append([num_moves, 0])
