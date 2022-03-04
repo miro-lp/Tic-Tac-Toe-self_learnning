@@ -52,6 +52,22 @@ def check_player_moves(board, mark):
             return index
 
 
+def check_computer_moves(board, mark):
+    r_c_d_board = [board[0], board[1], board[2], [board[0][0], board[1][0], board[2][0]],
+                   [board[0][1], board[1][1], board[2][1]], [board[0][2], board[1][2], board[2][2]],
+                   [board[0][0], board[1][1], board[2][2]], [board[0][0], board[1][1], board[2][2]]]
+    for r_c_d in r_c_d_board:
+        count = 0
+        index = ''
+        for x in r_c_d:
+            if x == mark:
+                count += 1
+            elif str(x).isdigit():
+                index = x
+        if count == 2 and str(index).isdigit():
+            return index
+
+
 def computer_choice_move(board):
     move = ""
     free_moves = [m for row in board for m in row if str(m).isdigit()]
@@ -64,6 +80,8 @@ def computer_choice_move(board):
                 break
     if check_player_moves(board, player_mark):
         move = check_player_moves(board, player_mark)
+    if check_computer_moves(board, computer_mark):
+        move = check_computer_moves(board, computer_mark)
     if move == "":
         move = random.choice(free_moves)
     for row in board:
