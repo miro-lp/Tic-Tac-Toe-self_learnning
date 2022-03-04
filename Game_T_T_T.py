@@ -188,7 +188,7 @@ def learning(board):
                 mark, move = win_moves[i]
                 if mark == 'X':
                     num_moves.append([move, i])
-    elif mark_O >= mark_X:
+    elif mark_O > mark_X:
         for i in range(len(win_moves)):
 
             if isinstance(win_moves[i], tuple):
@@ -199,7 +199,7 @@ def learning(board):
     num_moves = [i[1] for i in num_moves]
     for key in experience:
         for l in experience[key]:
-            if l[0] == num_moves and (mark_O + mark_X) < 9:
+            if l[0] == num_moves:
                 l[1] += 1
                 break
         experience[key].append([num_moves, 0])
