@@ -68,6 +68,22 @@ def check_computer_moves(board, mark):
             return index
 
 
+def choice_move(board):
+    free_moves = [m for row in board for m in row if str(m).isdigit()]
+    move = ''
+    if check_computer_moves(board, computer_mark) in free_moves:
+        move = check_computer_moves(board, computer_mark)
+    if check_player_moves(board, player_mark) in free_moves:
+        move = check_player_moves(board, player_mark)
+    if move == "":
+        move = random.choice(free_moves)
+    # print(move)
+    for row in board:
+        for i in range(len(row)):
+            if row[i] == move:
+                row[i] = player_mark
+
+
 def computer_choice_move(board):
     move = ""
     free_moves = [m for row in board for m in row if str(m).isdigit()]
@@ -182,6 +198,7 @@ def learning(board):
 for n in range(250):
     if play(board):
         learning(board)
+
         board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         player_mark = ''
         computer_mark = ''
