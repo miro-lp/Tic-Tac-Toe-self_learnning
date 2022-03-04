@@ -161,7 +161,7 @@ def learning(board):
                 mark, move = win_moves[i]
                 if mark == 'X':
                     num_moves.append([move, i])
-    elif mark_O > mark_X:
+    elif mark_O >= mark_X:
         for i in range(len(win_moves)):
 
             if isinstance(win_moves[i], tuple):
