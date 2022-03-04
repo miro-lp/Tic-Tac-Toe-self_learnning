@@ -199,10 +199,8 @@ def learning(board):
     num_moves = [i[1] for i in num_moves]
     for key in experience:
         for l in experience[key]:
-            if l[0] == num_moves:
+            if l[0] == num_moves and len(win_moves) < 9:
                 l[1] += 1
-                if len(l[0]) == 9:
-                    l[1] -= 1
                 break
         experience[key].append([num_moves, 0])
     np.save('data.npy', experience)
