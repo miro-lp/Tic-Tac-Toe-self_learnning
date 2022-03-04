@@ -93,8 +93,8 @@ def computer_choice_move(board):
     move = ""
     free_moves = [m for row in board for m in row if str(m).isdigit()]
     if state in experience and len(experience[state]) > 0:
-        print(state)
-        print(experience[state][0])
+        # print(state)
+        # print(experience[state][0])
         for i in range(len(experience[state][0][0])):
             if experience[state][0][0][i] in free_moves:
                 move = experience[state][0][0][i]
