@@ -93,15 +93,15 @@ def computer_choice_move(board):
     move = ""
     free_moves = [m for row in board for m in row if str(m).isdigit()]
     if state in experience and len(experience[state]) > 0:
-        print(state)
-        print(experience[state][0])
+        # print(state)
+        # print(experience[state][0])
         for i in range(len(experience[state][0][0])):
             if experience[state][0][0][i] in free_moves:
                 move = experience[state][0][0][i]
                 break
-    if check_player_moves(board, player_mark) in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+    if check_player_moves(board, player_mark) in free_moves:
         move = check_player_moves(board, player_mark)
-    if check_computer_moves(board, computer_mark) in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+    if check_computer_moves(board, computer_mark) in free_moves:
         move = check_computer_moves(board, computer_mark)
     if move == "":
         move = random.choice(free_moves)
