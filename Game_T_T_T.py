@@ -60,7 +60,7 @@ def computer_mark_choice():
 def check_player_moves(board, mark):
     r_c_d_board = [board[0], board[1], board[2], [board[0][0], board[1][0], board[2][0]],
                    [board[0][1], board[1][1], board[2][1]], [board[0][2], board[1][2], board[2][2]],
-                   [board[0][0], board[1][1], board[2][2]], [board[0][0], board[1][1], board[2][2]]]
+                   [board[0][0], board[1][1], board[2][2]], [board[0][2], board[1][1], board[2][0]]]
     for r_c_d in r_c_d_board:
         count = 0
         index = ''
@@ -76,7 +76,7 @@ def check_player_moves(board, mark):
 def check_computer_moves(board, mark):
     r_c_d_board = [board[0], board[1], board[2], [board[0][0], board[1][0], board[2][0]],
                    [board[0][1], board[1][1], board[2][1]], [board[0][2], board[1][2], board[2][2]],
-                   [board[0][0], board[1][1], board[2][2]], [board[0][0], board[1][1], board[2][2]]]
+                   [board[0][0], board[1][1], board[2][2]], [board[0][2], board[1][1], board[2][0]]]
     for r_c_d in r_c_d_board:
         count = 0
         index = ''
