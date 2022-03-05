@@ -6,6 +6,8 @@ player_mark = ''
 computer_mark = ''
 move_num = 0
 state = [n for n in range(0, 9)]
+is_winner = False
+win_mark = ''
 # np.save('data.npy',{})
 experience = np.load('data.npy', allow_pickle='TRUE').item()
 for key in experience:
@@ -71,10 +73,10 @@ def check_computer_moves(board, mark):
 def choice_move(board):
     free_moves = [m for row in board for m in row if str(m).isdigit()]
     move = ''
-    if check_computer_moves(board, computer_mark) in free_moves:
-        move = check_computer_moves(board, computer_mark)
-    if check_player_moves(board, player_mark) in free_moves:
-        move = check_player_moves(board, player_mark)
+    # if check_computer_moves(board, computer_mark) in free_moves:
+    #     move = check_computer_moves(board, computer_mark)
+    # if check_player_moves(board, player_mark) in free_moves:
+    #     move = check_player_moves(board, player_mark)
     if move == "":
         move = random.choice(free_moves)
     # print(move)
@@ -87,17 +89,10 @@ def choice_move(board):
 def computer_choice_move(board):
     move = ""
     free_moves = [m for row in board for m in row if str(m).isdigit()]
-    if state in experience and len(experience[state]) > 0:
-        # print(state)
-        # print(experience[state][0])
-        for i in range(len(experience[state][0][0])):
-            if experience[state][0][0][i] in free_moves:
-                move = experience[state][0][0][i]
-                break
-    if check_player_moves(board, player_mark) in free_moves:
-        move = check_player_moves(board, player_mark)
-    if check_computer_moves(board, computer_mark) in free_moves:
-        move = check_computer_moves(board, computer_mark)
+    # if check_player_moves(board, player_mark) in free_moves:
+    #     move = check_player_moves(board, player_mark)
+    # if check_computer_moves(board, computer_mark) in free_moves:
+    #     move = check_computer_moves(board, computer_mark)
     if move == "":
         move = random.choice(free_moves)
     for row in board:
@@ -118,9 +113,12 @@ def check_winner(mark, board):
     if any([first_row, second_row, third_row, first_column, second_column, third_column, first_diagonal,
             second_diagonal]):
         if player_mark == mark:
-
+            win_mark = mark
+            is_winner = True
             return True
         else:
+            win_mark = mark
+            is_winner = True
             return True
     elif len([m for row in board for m in row if str(m).isdigit()]) == 0:
         return True
@@ -161,48 +159,37 @@ def states_memory(board, num):
 
 
 def learning(board):
-    win_board = [m for row in board for m in row]
-    win_moves = list(state)
-    num_moves = []
-    mark_X = 0
-    mark_O = 0
-    for p in win_board:
-        if p == 'X':
-            mark_X += 1
-        elif p == 'O':
-            mark_O += 1
-    if mark_X > mark_O:
-        for i in range(len(win_moves)):
-            if isinstance(win_moves[i], tuple):
-                mark, move = win_moves[i]
-                if mark == 'X':
-                    num_moves.append([move, i])
-    elif mark_O >= mark_X:
-        for i in range(len(win_moves)):
+    if is_winner:
+        win_moves = list(state)
+        num_moves = []
 
+        for i in range(len(win_moves)):
             if isinstance(win_moves[i], tuple):
                 mark, move = win_moves[i]
-                if mark == 'O':
+                if mark == win_mark:
                     num_moves.append([move, i])
-    num_moves.sort(key=lambda a: a[0])
-    num_moves = [i[1] for i in num_moves]
-    for key in experience:
-        for l in experience[key]:
-            if l[0] == num_moves:
-                l[1] += 1
-                break
-        experience[key].append([num_moves, 0])
-    np.save('data.npy', experience)
+
+        num_moves.sort(key=lambda a: a[0])
+        num_moves = [i[1] for i in num_moves]
+        for key in experience:
+            for l in experience[key]:
+                if l[0] == num_moves:
+                    l[1] += 1
+                    break
+            experience[key].append([num_moves, 0])
+        np.save('data.npy', experience)
 
 
 for n in range(250):
     if play(board):
+        # print(board)
         learning(board)
-
         board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         player_mark = ''
         computer_mark = ''
         move_num = 0
+        is_winner = False
+        win_mark = ''
         state = [n for n in range(0, 9)]
         experience = np.load('data.npy', allow_pickle='TRUE').item()
         for key in experience:
