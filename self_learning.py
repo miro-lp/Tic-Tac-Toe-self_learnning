@@ -102,6 +102,8 @@ def computer_choice_move(board):
 
 
 def check_winner(mark, board):
+    global is_winner
+    global win_mark
     first_row = all([x == mark for x in board[0]])
     second_row = all([x == mark for x in board[1]])
     third_row = all([x == mark for x in board[2]])
@@ -182,7 +184,11 @@ def learning(board):
 
 for n in range(250):
     if play(board):
-        # print(board)
+        if is_winner:
+            print(board[0])
+            print(board[1])
+            print(board[2])
+            print()
         learning(board)
         board = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
         player_mark = ''
@@ -195,4 +201,4 @@ for n in range(250):
         for key in experience:
             experience[key].sort(reverse=True, key=lambda a: (a[1], len(a[0])))
 
-        print(experience)
+        # print(experience)
